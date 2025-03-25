@@ -4,13 +4,15 @@ import Layout from '@/components/layout/Layout';
 import DashboardCard from '@/components/dashboard/DashboardCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Calendar as CalendarIcon, Download, FileText, BarChart3, PieChart } from 'lucide-react';
+import { Calendar as CalendarIcon, Download, FileText, BarChart3, PieChart, Truck, Package } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { AreaChart, Area, BarChart, Bar, PieChart as RechartsPieChart, Pie, LineChart, Line, 
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { Badge } from '@/components/ui/badge';
+import { ChartContainer, ChartTooltip } from '@/components/ui/chart';
 
 // Sample data for charts
 const monthlyData = [
@@ -70,6 +72,7 @@ const Reports = () => {
                       selected={date}
                       onSelect={setDate}
                       initialFocus
+                      className={cn("p-3 pointer-events-auto")}
                     />
                   </PopoverContent>
                 </Popover>
@@ -84,20 +87,20 @@ const Reports = () => {
             <TabsContent value="sales" className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <DashboardCard title="Monthly Sales" description="Sales trends over the past year">
-                  <ResponsiveContainer width="100%" height={300}>
+                  <ChartContainer config={{}} className="h-[300px]">
                     <AreaChart data={monthlyData}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
-                      <Tooltip />
+                      <ChartTooltip />
                       <Legend />
                       <Area type="monotone" dataKey="sales" stroke="#8884d8" fill="#8884d8" />
                     </AreaChart>
-                  </ResponsiveContainer>
+                  </ChartContainer>
                 </DashboardCard>
                 
                 <DashboardCard title="Sales by Category" description="Product category breakdown">
-                  <ResponsiveContainer width="100%" height={300}>
+                  <ChartContainer config={{}} className="h-[300px]">
                     <RechartsPieChart>
                       <Pie
                         data={categoryData}
@@ -113,41 +116,41 @@ const Reports = () => {
                           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                       </Pie>
-                      <Tooltip />
+                      <ChartTooltip />
                     </RechartsPieChart>
-                  </ResponsiveContainer>
+                  </ChartContainer>
                 </DashboardCard>
               </div>
               
               <DashboardCard title="Sales vs. Orders" description="Comparison of sales revenue and order volume">
-                <ResponsiveContainer width="100%" height={300}>
+                <ChartContainer config={{}} className="h-[300px]">
                   <LineChart data={monthlyData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
                     <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-                    <Tooltip />
+                    <ChartTooltip />
                     <Legend />
                     <Line yAxisId="left" type="monotone" dataKey="sales" stroke="#8884d8" activeDot={{ r: 8 }} />
                     <Line yAxisId="right" type="monotone" dataKey="orders" stroke="#82ca9d" />
                   </LineChart>
-                </ResponsiveContainer>
+                </ChartContainer>
               </DashboardCard>
             </TabsContent>
             
             <TabsContent value="inventory" className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <DashboardCard title="Inventory Levels" description="Current inventory by month">
-                  <ResponsiveContainer width="100%" height={300}>
+                  <ChartContainer config={{}} className="h-[300px]">
                     <BarChart data={monthlyData}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
-                      <Tooltip />
+                      <ChartTooltip />
                       <Legend />
                       <Bar dataKey="inventory" fill="#82ca9d" />
                     </BarChart>
-                  </ResponsiveContainer>
+                  </ChartContainer>
                 </DashboardCard>
                 
                 <DashboardCard title="Low Stock Items" description="Products that need reordering">
@@ -193,16 +196,16 @@ const Reports = () => {
                 </DashboardCard>
                 
                 <DashboardCard title="Customer Acquisition" description="New customers over time">
-                  <ResponsiveContainer width="100%" height={300}>
+                  <ChartContainer config={{}} className="h-[300px]">
                     <LineChart data={monthlyData}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
-                      <Tooltip />
+                      <ChartTooltip />
                       <Legend />
                       <Line type="monotone" dataKey="orders" stroke="#8884d8" activeDot={{ r: 8 }} />
                     </LineChart>
-                  </ResponsiveContainer>
+                  </ChartContainer>
                 </DashboardCard>
               </div>
             </TabsContent>
