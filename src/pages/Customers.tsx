@@ -94,7 +94,7 @@ const columns: ColumnDef<Customer>[] = [
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => (
-      <Badge variant={row.original.status === 'active' ? 'success' : 'secondary'}>
+      <Badge variant={row.original.status === 'active' ? 'default' : 'secondary'} className={row.original.status === 'active' ? 'bg-green-500 hover:bg-green-600' : ''}>
         {row.original.status === 'active' ? 'Active' : 'Inactive'}
       </Badge>
     ),
